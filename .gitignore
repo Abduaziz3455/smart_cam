@@ -1,5 +1,6 @@
-
 dlib/
 /employees/
 /clients/
 /last_images/
+**/*.jpg
+**/*.xml
