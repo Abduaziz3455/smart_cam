@@ -19,6 +19,7 @@ logging.basicConfig(filename="info.log", level=logging.INFO)
 
 class Face_App:
     def __init__(self, cameras: list, scheduled_time="11:47"):
+        self.changes = {}
         self.cameras = cameras
         self.scheduled_time = scheduled_time
         self.db = Database(host="localhost", database="smart_cam", user="postgres", password="abdu3421")
@@ -34,6 +35,7 @@ class Face_App:
 
     def restart(self):
         self.stop()
+        time.sleep(3)
         self.run_function()
 
     def schedule_database_saving(self):
@@ -164,6 +166,21 @@ class Face_App:
 
         for thread in self.camera_threads:
             thread.join()
+
+    def recent_changes(self):
+        client_changes = self.changes
+        # action : update, create, delete
+        index = self.redis_base.people_names.index(client_changes['name'])
+        if client_changes['action'] == 'CREATE':
+            self.redis_base.people_names.append(client_changes['name'])
+            self.redis_base.people_encodings.append(client_changes['encod'])
+        elif client_changes['action'] == 'UPDATE':
+            self.redis_base.people_encodings[index] = client_changes['encod']
+        elif client_changes['action'] == 'DELETE':
+            self.redis_base.people_names.pop(index)
+            self.redis_base.people_encodings.pop(index)
+        self.changes = {}
+        print(self.redis_base.people_encodings[index])
 
 
 camera_list = [{'ip_address': '192.168.1.64', 'login': 'admin', 'password': 'softex2020', 'is_enter': True, 'real': 1}]
