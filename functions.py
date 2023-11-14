@@ -3,10 +3,10 @@ from datetime import datetime as dt
 from uuid import uuid4
 import cv2
 import numpy as np
-from database import Database
+from smart_cam.database import Database
 
-from deepface.extendedmodels import Age, Gender, Race, Emotion
-from deepface.DeepFace import build_model
+from smart_cam.deepface.extendedmodels import Age, Gender, Race, Emotion
+from smart_cam.deepface.DeepFace import build_model
 
 # models = {"age": build_model("Age"), "gender": build_model("Gender"), "emotion": build_model("Emotion")}
 # "emotion": build_model("Emotion")

@@ -9,10 +9,10 @@ import psycopg2
 import redis
 from imutils.video import FPS
 
-from database import Database
-from functions import main_function
-from redis_db import Memory
-from simple_facerec import SimpleFacerec
+from smart_cam.database import Database
+from smart_cam.functions import main_function
+from smart_cam.redis_db import Memory
+from smart_cam.simple_facerec import SimpleFacerec
 
 logging.basicConfig(filename="info.log", level=logging.INFO)
 

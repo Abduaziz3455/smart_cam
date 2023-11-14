@@ -1,4 +1,4 @@
-from database import Database
+from smart_cam.database import Database
 
 db = Database()
 
