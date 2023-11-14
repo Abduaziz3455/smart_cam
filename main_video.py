@@ -166,7 +166,7 @@ class Face_App:
 
         for thread in self.camera_threads:
             thread.join()
-
+    
     def recent_changes(self):
         client_changes = self.changes
         # action : update, create, delete
