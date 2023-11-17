@@ -9,8 +9,8 @@ import face_recognition
 import numpy as np
 import psycopg2
 
-from database import Database
-from face_check import correct_faces
+from smart_cam.database import Database
+from smart_cam.face_check import correct_faces
 
 logging.basicConfig(filename="info.log", level=logging.INFO)
 n_jitter = 100

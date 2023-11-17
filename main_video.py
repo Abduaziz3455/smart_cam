@@ -180,8 +180,3 @@ class Face_App:
             self.redis_base.people_names.pop(index)
             self.redis_base.people_encodings.pop(index)
         self.changes = {}
-
-
-camera_list = [{'ip_address': '192.168.1.64', 'login': 'admin', 'password': 'softex2020', 'is_enter': True, 'real': 1}]
-my_app = Face_App(cameras=camera_list)
-my_app.run_function()
