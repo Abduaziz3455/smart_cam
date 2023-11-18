@@ -23,7 +23,7 @@ def main_function(face_loc, name, dis, encod, frame, red_db, enter: bool, distan
     y1, x2, y2, x1 = face_loc
     if name == 'Unknown' and dis > distance_threshold:
         client_name = f"new-{str(uuid4())}"
-        image_path = f"clients/{client_name}.jpg"
+        image_path = f"media/clients/images/{client_name}.jpg"
         current_time = dt.now().strftime('%Y-%m-%d %H:%M:%S.%f')
         # Create a new row for the DataFrame
         new_row = {
@@ -58,8 +58,8 @@ def main_function(face_loc, name, dis, encod, frame, red_db, enter: bool, distan
             # Check if the time difference is greater than 5 minutes
             if abs(time_diff_minutes) > 5:
                 # Update DataFrame entries for an existing face
-                image_path = f"last_images/{name}.jpg"
-                cv2.imwrite(image_path, frame, [int(cv2.IMWRITE_JPEG_QUALITY), 70])
+                image_path = f"media/clients/last_images/{name}.jpg"
+                cv2.imwrite(image_path, frame[y1 - 30:y2 + 30, x1 - 30:x2 + 30], [int(cv2.IMWRITE_JPEG_QUALITY), 70])
 
                 row = {
                     'last_time': f"{current_time}",
@@ -78,9 +78,9 @@ def main_function(face_loc, name, dis, encod, frame, red_db, enter: bool, distan
                 print("Updated!!!")
         else:
             is_client = True
-            image_path = f"clients/{name}.jpg"
+            image_path = f"media/clients/images/{name}.jpg"
             if not os.path.exists(image_path):
-                image_path = f"employees/{name}.jpg"
+                image_path = f"media/employees/images/{name}.jpg"
                 if not os.path.exists(image_path):
                     return False
                 is_client = False
@@ -99,7 +99,6 @@ def main_function(face_loc, name, dis, encod, frame, red_db, enter: bool, distan
                 'image': image_path,
                 'last_image': '',
             }
-
             # Append the new row to the DataFrame
             red_db.add_person(person=f"client:{name}", **new_row)
             if is_client:
@@ -107,11 +106,6 @@ def main_function(face_loc, name, dis, encod, frame, red_db, enter: bool, distan
             else:
                 print(f"{name[:6]} Employee saved!")
     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 2)
-    # if age:
-    #     cv2.putText(frame, f"{name[:5]}-{accuracy:.2f}-{age}", (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200),
-    #                 2)
-    # else:
-    # Draw a rectangle around the detected face
     cv2.putText(frame, f"{name}-{dis:.2f}", (x1, y1 - 13), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
 
     # age, gender, emotion

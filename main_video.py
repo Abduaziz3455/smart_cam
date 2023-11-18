@@ -148,7 +148,7 @@ class Face_App:
         # get all people as variable
         self.redis_base.get_all_people('name', 'array_bytes')
         # synchronize redis and database
-        self.face_recognizer.load_encoding_images("employees/", self.redis_base)
+        self.face_recognizer.load_encoding_images("smart_cam/employees/", self.redis_base)
         # self.face_recognizer.load_encoding_images("clients/", redis_base)
 
         # Create a thread for each camera
